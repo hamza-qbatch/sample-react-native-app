@@ -1,9 +1,14 @@
-/**
- * @format
- */
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
 
-import {AppRegistry} from 'react-native';
+import store from './App/store/index';
 import App from './App';
-import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+const AwesomeProject = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);

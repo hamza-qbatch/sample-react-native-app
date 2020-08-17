@@ -1,8 +1,5 @@
-const saveClient = (client) => {
-  return {
-    type: 'SAVE_CLIENT_NAME',
-    payload: client,
-  };
+const saveClients = (client) => {
+  return { type: 'SAVE_NEW_CLIENT', payload: client };
 };
 
-export default saveClient;
+export default saveClients;

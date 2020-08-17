@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
 import clients from './clients';
+import counter from './counter';
 
-const AppReducers = combineReducers({
+export default combineReducers({
   clients,
+  counter,
 });
-
-export default AppReducers;

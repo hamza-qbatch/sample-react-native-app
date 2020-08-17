@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider, connect } from 'react-redux';
-import { AppRegistry } from 'react-native';
-import store from './App/store';
-
-import saveClient from './App/actions/clients';
-
 import {
   StyleSheet,
   ScrollView,
@@ -23,10 +17,11 @@ import Profile from './App/Components/Profile/ProfileScreen.jsx';
 import Login from './App/Components/Authentication/LoginScreen.jsx';
 import SampleScreen from './App/Components/Designs/SampleScreen.jsx';
 import ListDesigns from './App/Components/Designs/ListDesigns.jsx';
+import Counter from './App/Components/Counter/Counter.jsx';
 
 const Stack = createStackNavigator();
 
-export default class HelloWorldApp extends Component {
+class HelloWorldApp extends Component {
   state = {
     status: '',
     loginName: '',
@@ -182,58 +177,58 @@ export default class HelloWorldApp extends Component {
     const { status, loginName, loginPassword } = this.state;
     const { clientNames } = this.props;
     return (
-      <Provider store={store}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="sampleDesign" component={SampleScreen} />
-            {status === 'Registered' ? (
-              <>
-                <Stack.Screen options={{ title: 'Clients' }} name="ClientsList">
-                  {(props) => (
-                    <ListDesigns
-                      {...props}
-                      saveClientNameOnInputChange={
-                        this.saveClientNameOnInputChange
-                      }
-                      clientNames={clientNames}
-                      saveClientName={this.saveClientName}
-                      loginName={loginName}
-                      logout={this.logOut}
-                    />
-                  )}
-                </Stack.Screen>
-                <Stack.Screen options={{ title: 'Profile' }} name="Profile">
-                  {(props) => (
-                    <Profile
-                      {...props}
-                      loginName={loginName}
-                      logout={this.logOut}
-                    />
-                  )}
-                </Stack.Screen>
-                <Stack.Screen options={{ title: 'Welcome' }} name="Home">
-                  {(props) => (
-                    <Home {...props} loginName={loginName} logout={this.logOut} />
-                  )}
-                </Stack.Screen>
-              </>
-            ) : (
-              <Stack.Screen options={{ title: 'Login to Continue' }} name="Login">
+      <NavigationContainer>
+        <Stack.Navigator>
+          {status === 'Registered' ? (
+            <>
+              <Stack.Screen name="ListDesigns" component={ListDesigns} />
+              <Stack.Screen name="counter" component={Counter} />
+              <Stack.Screen name="sampleDesign" component={SampleScreen} />
+              <Stack.Screen options={{ title: 'Clients' }} name="ClientsList">
                 {(props) => (
-                  <Login
+                  <ListDesigns
                     {...props}
-                    saveLoginName={this.saveLoginName}
-                    saveLoginPassword={this.saveLoginPassword}
-                    setStatusAsRegistered={this.setStatusAsRegistered}
+                    saveClientNameOnInputChange={
+                      this.saveClientNameOnInputChange
+                    }
+                    clientNames={clientNames}
+                    saveClientName={this.saveClientName}
                     loginName={loginName}
-                    loginPassword={loginPassword}
+                    logout={this.logOut}
                   />
                 )}
               </Stack.Screen>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </Provider>
+              <Stack.Screen options={{ title: 'Profile' }} name="Profile">
+                {(props) => (
+                  <Profile
+                    {...props}
+                    loginName={loginName}
+                    logout={this.logOut}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen options={{ title: 'Welcome' }} name="Home">
+                {(props) => (
+                  <Home {...props} loginName={loginName} logout={this.logOut} />
+                )}
+              </Stack.Screen>
+            </>
+          ) : (
+            <Stack.Screen options={{ title: 'Login to Continue' }} name="Login">
+              {(props) => (
+                <Login
+                  {...props}
+                  saveLoginName={this.saveLoginName}
+                  saveLoginPassword={this.saveLoginPassword}
+                  setStatusAsRegistered={this.setStatusAsRegistered}
+                  loginName={loginName}
+                  loginPassword={loginPassword}
+                />
+              )}
+            </Stack.Screen>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }
@@ -273,4 +268,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('AwesomeProject', () => HelloWorldApp);
+export default HelloWorldApp;
